@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PORSCHE — Engineered Obsession</title>
+<style>
+  :root{
+    --black:#0a0a0a;
+    --near-black:#121212;
+    --off-white:#f2f1ec;
+    --red:#c60c30;
+    --red-dim:#7a0a1f;
+    --silver:#b9bcc2;
+    --line:rgba(242,241,236,0.14);
+    --display: 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+    --body: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--off-white);
+    font-family:var(--body);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{display:block; max-width:100%;}
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:1240px; margin:0 auto; padding:0 32px;}
+
+  h1,h2,h3{
+    font-family:var(--display);
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 40px;
+    background:linear-gradient(to bottom, rgba(0,0,0,0.65), transparent);
+    transition:background .3s ease;
+  }
+  header.scrolled{background:rgba(10,10,10,0.92); border-bottom:1px solid var(--line);}
+  .logo{
+    font-family:var(--display); font-weight:800; font-size:22px;
+    letter-spacing:0.42em; text-indent:0.42em;
+  }
+  nav ul{list-style:none; display:flex; gap:38px;}
+  nav a{
+    font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--silver); position:relative; padding-bottom:4px;
+  }
+  nav a:hover{color:var(--off-white);}
+  nav a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:1px;
+    background:var(--red); transition:width .25s ease;
+  }
+  nav a:hover::after{width:100%;}
+  .btn{
+    display:inline-block; padding:12px 26px; border-radius:2px;
+    font-size:12px; letter-spacing:0.14em; text-transform:uppercase;
+    font-weight:700; cursor:pointer; border:1px solid transparent;
+    transition:all .25s ease;
+  }
+  .btn-red{background:var(--red); color:#fff;}
+  .btn-red:hover{background:#e01133; box-shadow:0 0 24px rgba(198,12,48,.5);}
+  .btn-ghost{border-color:rgba(242,241,236,0.4); color:var(--off-white);}
+  .btn-ghost:hover{border-color:#fff; background:rgba(255,255,255,0.06);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; height:100vh; min-height:640px;
+    display:flex; align-items:flex-end;
+    background:url('./assets/hero-gt3rs.png') center 30%/cover no-repeat;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.15) 35%, rgba(0,0,0,.85) 100%);
+  }
+  .hero-inner{position:relative; z-index:2; width:100%; padding-bottom:70px;}
+  .eyebrow{
+    font-size:12px; letter-spacing:0.3em; color:var(--red); font-weight:700;
+    margin-bottom:18px; text-transform:uppercase;
+  }
+  .hero h1{
+    font-size:clamp(42px,7vw,88px); line-height:0.98; color:#fff;
+    max-width:820px; margin-bottom:22px;
+  }
+  .hero h1 span{color:var(--red);}
+  .hero p.lead{
+    max-width:460px; color:var(--silver); font-size:16px; margin-bottom:30px;
+  }
+  .hero-ctas{display:flex; gap:16px; flex-wrap:wrap;}
+  .scroll-cue{
+    position:absolute; right:40px; bottom:40px; z-index:2;
+    display:flex; align-items:center; gap:12px; color:var(--silver);
+    font-size:11px; letter-spacing:0.2em; text-transform:uppercase;
+  }
+  .scroll-cue .dot{
+    width:34px; height:34px; border:1px solid rgba(242,241,236,.4); border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    animation:bob 1.8s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(5px);}}
+
+  /* ---------- STATS STRIP ---------- */
+  .stats{
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    background:var(--near-black);
+  }
+  .stats .wrap{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    padding:34px 32px;
+  }
+  .stat{text-align:center; border-left:1px solid var(--line);}
+  .stat:first-child{border-left:none;}
+  .stat .num{font-family:var(--display); font-weight:800; font-size:30px; color:#fff;}
+  .stat .lbl{font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--silver); margin-top:6px;}
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section{padding:120px 0;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    margin-bottom:56px; gap:24px; flex-wrap:wrap;
+  }
+  .section-head .tag{color:var(--red); font-size:12px; letter-spacing:0.28em; text-transform:uppercase; margin-bottom:14px; display:block;}
+  .section-head h2{font-size:clamp(30px,4vw,48px); color:#fff; max-width:600px;}
+  .section-head p{color:var(--silver); max-width:360px; font-size:14px;}
+
+  /* ---------- MODELS ---------- */
+  .models{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line);}
+  .model-card{
+    background:var(--near-black); position:relative; overflow:hidden;
+    display:flex; flex-direction:column;
+  }
+  .model-card .img-box{height:230px; overflow:hidden; position:relative;}
+  .model-card .img-box img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+  .model-card:hover .img-box img{transform:scale(1.08);}
+  .model-card .body{padding:26px 26px 30px;}
+  .model-card .kicker{font-size:11px; letter-spacing:0.16em; color:var(--red); text-transform:uppercase; margin-bottom:8px;}
+  .model-card h3{font-size:24px; color:#fff; margin-bottom:10px;}
+  .model-card p{font-size:13.5px; color:var(--silver); margin-bottom:18px; min-height:40px;}
+  .model-card .meta{
+    display:flex; justify-content:space-between; align-items:center;
+    border-top:1px solid var(--line); padding-top:16px; font-size:12px;
+  }
+  .model-card .price{color:#fff; font-weight:700;}
+  .model-card .spec{color:var(--silver);}
+
+  /* ---------- CRAFT / INTERIOR ---------- */
+  .craft{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
+  .craft img{border-radius:2px; width:100%; height:460px; object-fit:cover;}
+  .craft .copy .tag{color:var(--red); font-size:12px; letter-spacing:0.28em; text-transform:uppercase; margin-bottom:16px; display:block;}
+  .craft h2{font-size:clamp(28px,3.4vw,40px); color:#fff; margin-bottom:20px; line-height:1.1;}
+  .craft p{color:var(--silver); font-size:15px; margin-bottom:16px; max-width:460px;}
+  .feat-list{margin-top:26px; display:flex; flex-direction:column; gap:14px;}
+  .feat-list li{list-style:none; display:flex; gap:14px; align-items:flex-start; font-size:13.5px; color:var(--off-white);}
+  .feat-list .idx{color:var(--red); font-family:var(--display); font-weight:800; font-size:13px; min-width:22px;}
+
+  /* ---------- CONFIGURATOR (mini logic engine) ---------- */
+  .configurator{background:var(--near-black); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .config-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start;}
+  .config-panel{background:#181818; border:1px solid var(--line); border-radius:3px; padding:34px;}
+  .field{margin-bottom:26px;}
+  .field label{display:block; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--silver); margin-bottom:12px;}
+  .opt-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .opt{
+    padding:10px 16px; border:1px solid rgba(242,241,236,.22); border-radius:2px;
+    font-size:12.5px; cursor:pointer; color:var(--off-white); background:transparent;
+    transition:all .2s ease;
+  }
+  .opt.active{border-color:var(--red); background:rgba(198,12,48,.14); color:#fff;}
+  .opt:hover{border-color:var(--off-white);}
+  .swatch{width:22px; height:22px; border-radius:50%; display:inline-block; border:2px solid rgba(255,255,255,.25); vertical-align:middle; margin-right:8px;}
+  .price-out{
+    margin-top:8px; padding-top:22px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:baseline;
+  }
+  .price-out .label{font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--silver);}
+  .price-out .amount{font-family:var(--display); font-weight:800; font-size:32px; color:#fff;}
+  .config-preview{position:relative;}
+  .config-preview img{width:100%; border-radius:3px; height:420px; object-fit:cover;}
+  .config-preview .badge{
+    position:absolute; top:20px; left:20px; background:rgba(10,10,10,.75);
+    padding:8px 14px; font-size:11px; letter-spacing:0.14em; text-transform:uppercase; border-left:2px solid var(--red);
+  }
+
+  /* ---------- BOOKING (mock backend) ---------- */
+  .booking{padding:120px 0; text-align:center;}
+  .booking .wrap{max-width:640px;}
+  .booking h2{font-size:clamp(28px,4vw,44px); color:#fff; margin-bottom:14px;}
+  .booking p.lead{color:var(--silver); margin-bottom:40px;}
+  form.book-form{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px; text-align:left;
+    background:var(--near-black); border:1px solid var(--line); padding:34px; border-radius:3px;
+  }
+  form.book-form .full{grid-column:1/-1;}
+  form.book-form label{font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--silver); display:block; margin-bottom:8px;}
+  form.book-form input, form.book-form select{
+    width:100%; background:#1c1c1c; border:1px solid var(--line); color:#fff;
+    padding:12px 14px; border-radius:2px; font-size:14px; font-family:var(--body);
+  }
+  form.book-form input:focus, form.book-form select:focus{outline:none; border-color:var(--red);}
+  form.book-form button{grid-column:1/-1; margin-top:8px; border:none;}
+  #confirm-box{
+    display:none; margin-top:22px; padding:20px 24px; background:rgba(198,12,48,.1);
+    border:1px solid var(--red-dim); border-radius:3px; text-align:left; font-size:14px;
+  }
+  #confirm-box strong{color:#fff;}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line); padding:50px 0 30px;}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;}
+  footer .logo{font-size:16px;}
+  footer .fine{font-size:11.5px; color:var(--silver);}
+  footer .flinks{display:flex; gap:26px;}
+  footer .flinks a{font-size:12px; color:var(--silver); letter-spacing:0.06em;}
+  footer .flinks a:hover{color:#fff;}
+
+  @media(max-width:900px){
+    nav ul{display:none;}
+    .models{grid-template-columns:1fr;}
+    .craft, .config-grid{grid-template-columns:1fr;}
+    .stats .wrap{grid-template-columns:repeat(2,1fr); row-gap:24px;}
+    form.book-form{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="logo">PORSCHE</div>
+  <nav>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#models">Models</a></li>
+      <li><a href="#craft">Craft</a></li>
+      <li><a href="#configure">Configure</a></li>
+      <li><a href="#book">Contact</a></li>
+    </ul>
+  </nav>
+  <a href="#book" class="btn btn-red">Book a Drive</a>
+</header>
+
+<section class="hero" id="home">
+  <div class="hero-inner wrap">
+    <div class="eyebrow">The 911 GT3 RS — Track Bred</div>
+    <h1>Engineered <span>Obsession.</span>| GitHub DevOps</h1>
+    <p class="lead">Top performance requires more than perfect conditions — it demands a machine built without compromise. This is the journey to perfection.</p>
+    <div class="hero-ctas">
+      <a href="#configure" class="btn btn-red">Configure Yours</a>
+      <a href="#models" class="btn btn-ghost">Explore Models</a>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="dot">↓</span> Scroll</div>
+</section>
+
+<section class="stats">
+  <div class="wrap">
+    <div class="stat"><div class="num">0–100</div><div class="lbl">3.2s · GT3 RS</div></div>
+    <div class="stat"><div class="num">525</div><div class="lbl">HP Naturally Aspirated</div></div>
+    <div class="stat"><div class="num">296</div><div class="lbl">KM/H Top Speed</div></div>
+    <div class="stat"><div class="num">73+</div><div class="lbl">Years of Racing DNA</div></div>
+  </div>
+</section>
+
+<section class="section" id="models">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="tag">The Lineup</span>
+        <h2>Three ways to feel every road differently.</h2>
+      </div>
+      <p>From naturally-aspirated track weapons to fully electric performance — every model is built around the same idea: the drive matters.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="models">
+      <div class="model-card">
+        <div class="img-box"><img src="./assets/gt3rs-rear.png" alt="Porsche 911 GT3 RS on track"></div>
+        <div class="body">
+          <span class="kicker">Track Icon</span>
+          <h3>911 GT3 RS</h3>
+          <p>Aerodynamics borrowed straight from GT racing, tuned for the road.</p>
+          <div class="meta"><span class="spec">525 HP · Manual/PDK</span><span class="price">from $241,300</span></div>
+        </div>
+      </div>
+      <div class="model-card">
+        <div class="img-box"><img src="./assets/carrera-cab.png" alt="Porsche 911 Carrera Cabriolet"></div>
+        <div class="body">
+          <span class="kicker">Everyday Icon</span>
+          <h3>911 Carrera Cabriolet</h3>
+          <p>Open-top thrill with the balance the 911 has been famous for since 1963.</p>
+          <div class="meta"><span class="spec">379 HP · Flat-6</span><span class="price">from $128,650</span></div>
+        </div>
+      </div>
+      <div class="model-card">
+        <div class="img-box"><img src="./assets/taycan.png" alt="Porsche Taycan front"></div>
+        <div class="body">
+          <span class="kicker">Electric Icon</span>
+          <h3>Taycan Turbo</h3>
+          <p>The future of electric performance, without losing the soul of Porsche.</p>
+          <div class="meta"><span class="spec">670 HP · Dual Motor</span><span class="price">from $138,220</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="craft">
+  <div class="wrap craft">
+    <img src="./assets/interior.png" alt="Porsche 911 interior cockpit">
+    <div class="copy">
+      <span class="tag">Inside the Cockpit</span>
+      <h2>Every switch answers to the driver, not the passenger.</h2>
+      <p>Analog rev counter at the center. Digital clusters that adapt to you. Carbon-trimmed surfaces that remind you this is still, first and foremost, a driver's car.</p>
+      <ul class="feat-list">
+        <li><span class="idx">01</span> Porsche Communication Management with real-time telemetry overlay.</li>
+        <li><span class="idx">02</span> Sport Chrono Package with lap-timer and drive-mode dial on the wheel.</li>
+        <li><span class="idx">03</span> Adaptive sport seats finished in leather and Race-Tex.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="configurator" id="configure">
+  <div class="section" style="padding-bottom:120px;">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="tag">Build Yours</span>
+          <h2>Configure your 911.</h2>
+        </div>
+        <p>Pick a model, paint, and wheel set — your estimated price updates instantly.</p>
+      </div>
+      <div class="config-grid">
+        <div class="config-panel">
+          <div class="field">
+            <label>Model</label>
+            <div class="opt-row" id="modelOpts">
+              <button class="opt active" data-model="GT3 RS" data-base="241300">911 GT3 RS</button>
+              <button class="opt" data-model="Carrera Cabriolet" data-base="128650">Carrera Cabriolet</button>
+              <button class="opt" data-model="Taycan Turbo" data-base="138220">Taycan Turbo</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Paint to Sample</label>
+            <div class="opt-row" id="colorOpts">
+              <button class="opt active" data-color="GT Silver" data-add="0"><span class="swatch" style="background:#c9cbcf;"></span>GT Silver</button>
+              <button class="opt" data-color="Guards Red" data-add="3150"><span class="swatch" style="background:#c60c30;"></span>Guards Red</button>
+              <button class="opt" data-color="Racing Green" data-add="4200"><span class="swatch" style="background:#0f3b2c;"></span>Racing Green</button>
+              <button class="opt" data-color="Jet Black" data-add="1500"><span class="swatch" style="background:#101010;"></span>Jet Black</button>
+            </div>
+          </div>
+          <div class="field">
+            <label>Wheels</label>
+            <div class="opt-row" id="wheelOpts">
+              <button class="opt active" data-wheel="20/21in Sport" data-add="0">Sport Alloy</button>
+              <button class="opt" data-wheel="Center-Lock Magnesium" data-add="9640">Magnesium Center-Lock</button>
+            </div>
+          </div>
+          <div class="price-out">
+            <span class="label">Estimated Price</span>
+            <span class="amount" id="priceAmount">$241,300</span>
+          </div>
+        </div>
+        <div class="config-preview">
+          <img id="previewImg" src="./assets/gt3rs-rear.png" alt="Configured Porsche preview">
+          <div class="badge" id="previewBadge">911 GT3 RS · GT Silver</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="booking" id="book">
+  <div class="wrap">
+    <span class="tag" style="color:var(--red); font-size:12px; letter-spacing:.28em; text-transform:uppercase;">Book a Free Driving Experience</span>
+    <h2 style="margin-top:14px;">Feel it before you own it.</h2>
+    <p class="lead">Reserve a supervised test drive at your nearest Porsche Experience Center. No obligation — just the drive.</p>
+    <form class="book-form" id="bookForm">
+      <div class="field-w">
+        <label>Full Name</label>
+        <input type="text" id="fname" required placeholder="Jordan Wagner">
+      </div>
+      <div class="field-w">
+        <label>Email</label>
+        <input type="email" id="femail" required placeholder="you@email.com">
+      </div>
+      <div class="field-w">
+        <label>Model of Interest</label>
+        <select id="fmodel">
+          <option>911 GT3 RS</option>
+          <option>911 Carrera Cabriolet</option>
+          <option>Taycan Turbo</option>
+        </select>
+      </div>
+      <div class="field-w">
+        <label>Preferred Date</label>
+        <input type="date" id="fdate" required>
+      </div>
+      <button type="submit" class="btn btn-red full">Confirm Booking</button>
+    </form>
+    <div id="confirm-box"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">PORSCHE</div>
+    <div class="flinks">
+      <a href="#home">Home</a>
+      <a href="#models">Models</a>
+      <a href="#configure">Configure</a>
+      <a href="#book">Contact</a>
+    </div>
+    <div class="fine">© 2026 Demo build for coursework — not an official Porsche site.</div>
+  </div>
+</footer>
+
+<script>
+  // Sticky header shading
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // ---- Configurator "backend" logic (pure client-side pricing engine) ----
+  const state = { base: 241300, model: 'GT3 RS', color: 'GT Silver', colorAdd: 0, wheel: '20/21in Sport', wheelAdd: 0 };
+  const priceEl = document.getElementById('priceAmount');
+  const previewImg = document.getElementById('previewImg');
+  const previewBadge = document.getElementById('previewBadge');
+
+  const modelImages = {
+    'GT3 RS': './assets/gt3rs-rear.png',
+    'Carrera Cabriolet': './assets/carrera-cab.png',
+    'Taycan Turbo': './assets/taycan.png'
+  };
+
+  function fmt(n){
+    return '$' + n.toLocaleString('en-US');
+  }
+
+  function recalc(){
+    const total = state.base + state.colorAdd + state.wheelAdd;
+    priceEl.textContent = fmt(total);
+    previewImg.src = modelImages[state.model];
+    previewBadge.textContent = `${state.model} · ${state.color}`;
+  }
+
+  function wireGroup(groupId, key, dataAttr, extra){
+    document.getElementById(groupId).addEventListener('click', (e) => {
+      const btn = e.target.closest('.opt');
+      if(!btn) return;
+      document.querySelectorAll(`#${groupId} .opt`).forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state[key] = btn.dataset[dataAttr];
+      if(extra) extra(btn);
+      recalc();
+    });
+  }
+
+  wireGroup('modelOpts', 'model', 'model', (btn) => { state.base = parseInt(btn.dataset.base, 10); });
+  wireGroup('colorOpts', 'color', 'color', (btn) => { state.colorAdd = parseInt(btn.dataset.add, 10); });
+  wireGroup('wheelOpts', 'wheel', 'wheel', (btn) => { state.wheelAdd = parseInt(btn.dataset.add, 10); });
+
+  recalc();
+
+  // ---- Booking "backend" simulation: validates + generates a confirmation record ----
+  document.getElementById('bookForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const model = document.getElementById('fmodel').value;
+    const date = document.getElementById('fdate').value;
+
+    const bookingId = 'PSC-' + Math.random().toString(36).substring(2,8).toUpperCase();
+    const box = document.getElementById('confirm-box');
+    box.style.display = 'block';
+    box.innerHTML = `<strong>Booking confirmed — ${bookingId}</strong><br>
+      ${name}, your ${model} experience is scheduled for <strong>${date || 'a date to be confirmed'}</strong>.
+      A confirmation has been queued to <strong>${email}</strong>.`;
+    this.reset();
+  });
+</script>
+
+</body>
+</html>
