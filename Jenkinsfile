@@ -27,7 +27,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running automated tests'
-                sh 'pytest test_app.py -v'
+                sh 'python3 -m pytest test_app.py -v'
             }
         }
     }
